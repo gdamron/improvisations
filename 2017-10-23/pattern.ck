@@ -15,8 +15,9 @@ BlitSaw osc => Gain g => dac;
 g => r;
 
 0.0 => r.dry;
-0.1 => r.gain;
-.25 => g.gain;
+0.8 => r.gain;
+0.3 => osc.gain;
+.3 => g.gain;
 
 125::ms => dur T;
 74 => int base;

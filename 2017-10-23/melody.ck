@@ -10,13 +10,13 @@ if (Math.random2(0, 1) == 0) {
 }
 [0.5, 1, 0.25, 2] @=> float durations[];
 
-GVerb r => dac;
 BlitSaw osc => Gain g => dac;
+GVerb r => g;
 osc => r;
 
 0.0 => r.dry;
 0.2 => r.gain;
-.25 => g.gain;
+.2 => g.gain;
 
 500::ms => dur T;
 60 => int base;
