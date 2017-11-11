@@ -25,6 +25,9 @@
 1000::ms => dur T;
 0.2 => float START_AMP;
 60 => int BASE_NOTE;
+if (me.args()) {
+    Std.atoi(me.arg(0)) => BASE_NOTE;
+}
 
 // ugens
 SinOsc vibrato;
