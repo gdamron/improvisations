@@ -5,7 +5,6 @@ const M_MIN = 8;
 const M_MAX = 16;
 const K_MIN_DENOM = 4;
 const K_MAX_DENOM = 2;
-const MAX_BUTTONS = 4;
 
 const DIFFICULTY_TIME_INTERVAL = 12;
 const DIFFICULTY_RED_INTERVAL = 4;
@@ -18,27 +17,7 @@ const MAX_BLUE = 4;
 const MAX_RED = 4;
 const MIN_DUR = 250;
 
-function adjustDifficulty(config) {
-    let level = config.Level;
-    let buttonHandicap = 1; //MAX_BUTTONS / config.Buttons;
-    config.BeatDuration = config.BeatDuration / buttonHandicap - (level - 1) * DIFFICULTY_TIME_INTERVAL / buttonHandicap;
-    if (config.BeatDuration < MIN_DUR) {
-        config.BeatDuration = MIN_DUR;
-    }
-
-    config.MaxBlue = MIN_BLUE + Math.floor(level * buttonHandicap / DIFFICULTY_BLUE_INTERVAL);
-    if (config.MaxBlue > MAX_BLUE) {
-        conifg.MaxBlue = MAX_BLUE;
-    }
-    config.MaxRed = Math.floor(level * buttonHandicap / DIFFICULTY_RED_INTERVAL);
-    if (config.MaxRed > MAX_RED) {
-        config.MaxRed = MAX_RED;
-    }
-
-    if (level > DIFFICULTY_ROUND_THRESHOLD) {
-        config.RoundDuration = config.RoundDuration + (level - DIFFICULTY_ROUND_THRESHOLD) * DIFFICULTY_ROUND_INTERVAL;
-    }
-
+function adjustDuration(config) {
     let measure = config.BeatDuration * PHRASE_LENGTH;
     let measures = Math.floor(config.RoundDuration / measure);
     let realDuration = measure * measures;
@@ -47,8 +26,6 @@ function adjustDifficulty(config) {
     }
 
     config.RoundDuration = realDuration;
-
-    console.log(`Set difficulty: beat=${config.BeatDuration}, blues=${config.MaxBlue}, red=${config.MaxRed}, dur=${config.RoundDuration}`);
 
     return config;
 }
@@ -130,6 +107,6 @@ Array.prototype.equals = function(arr) {
 };
 
 module.exports = {
-    adjustDifficulty: adjustDifficulty,
+    adjustDuration: adjustDuration,
     generateSequence: generateSequence
 }

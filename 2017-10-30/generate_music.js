@@ -9,15 +9,12 @@ const CHUCK_PREFIX = './chuck/';
 var config = {
     Level: process.env.LEVEL || 1,
     Silent: !!process.env.SILENT,
-    BeatDuration: 1000,
-    MaxRed: 0,
-    MaxBlue: 1,
+    BeatDuration: 700,
     RoundDuration: 30000,
-    Buttons: 4
 }
 
 function run(config) {
-    config = euclid.adjustDifficulty(config);
+    config = euclid.adjustDuration(config);
     let RoundDuration = config.RoundDuration;
     let BeatDuration = config.BeatDuration;
 
