@@ -15,7 +15,6 @@
 16 => int DELAY_FACTOR;
 0.2 => float DELAY_GAIN;
 
-500 => int ADSR_PULSE_THRESH;
 4 => int ADSR_ATTACK_FACTOR;
 0 => int ADSR_DECAY_FACTOR;
 1.0 => float ADSR_SUSTAIN;
