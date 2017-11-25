@@ -1,7 +1,3 @@
----
-permalink: index
----
+# improvisations
 
-### Week of:
-
-[2017-11-20](2017-11-20/index.html)
+Generative musical sketches, published about once a week.
