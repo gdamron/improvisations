@@ -9,7 +9,7 @@ const CHUCK_PREFIX = './chuck/';
 var config = {
     Level: process.env.LEVEL || 1,
     Silent: !!process.env.SILENT,
-    BeatDuration: 700,
+    BeatDuration: 620,
     RoundDuration: 30000,
 }
 
