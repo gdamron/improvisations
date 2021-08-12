@@ -7,7 +7,7 @@
 4200.0 => float MAX_LPF;
 210.0 => float MIN_LPF;
 
-Std.atof(me.arg(1)) => float t;
+Std.atof(me.arg(0)) => float t;
 
 t::ms => dur T;
 0 => int step;

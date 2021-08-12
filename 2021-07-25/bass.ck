@@ -17,7 +17,7 @@
 0.8 => float ADSR_S;
 16::second => dur ADSR_R;
 
-Std.atof(me.arg(1)) => float t;
+Std.atof(me.arg(0)) => float t;
 
 t::ms => dur T;
 0 => int step;

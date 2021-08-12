@@ -4,7 +4,7 @@
 0.1 => float GAIN_BIAS;
 
 16 => int PULSE_FACTOR;
-0.35 => float MIN_PULSE;
+350 => int MIN_PULSE;
 2 => int MIN_PULSE_FACTOR;
 
 2 => int LFO_SETTING;
@@ -30,9 +30,9 @@
 4000 => int RING;
 
 // parameters
-Std.atof(me.arg(1)) => float t;
-Std.atof(me.arg(2)) => float START_AMP;
-Std.atoi(me.arg(3)) => int BASE_NOTE;
+Std.atof(me.arg(0)) => float t;
+Std.atof(me.arg(1)) => float START_AMP;
+Std.atoi(me.arg(2)) => int BASE_NOTE;
 
 // ugens
 SinOsc vibrato;
@@ -87,8 +87,9 @@ Std.mtof(freq3) => s3.freq;
 
 if (t < MIN_PULSE) {
     t * 2 => t;
-    t::ms => T;
 }
+
+t::ms => T;
 
 // delay
 T / DELAY_FACTOR => d.delay;
