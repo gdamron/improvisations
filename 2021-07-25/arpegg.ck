@@ -28,22 +28,9 @@ float freq;
 0.0 => float total;
 
 BlitSaw s;
-DelayL d;
 // connect patch
-//GVerb r => dac;
-JCRev r => dac;
-LPF f => Pan2 p => dac;
-p => r;
-0.4 => p.pan;
-1::second => d.max;
-0.1 => d.gain;
-T => d.delay;
-d => f;
-s => d;
+LPF f => dac;
 s => f;
-// 0 => r.dry;
-// 0.35 => r.gain;
-0.4 => r.mix;
 MIN_LPF => f.freq;
 BASE_NOTE - 2 => freq;
 Std.mtof(freq) => s.freq;

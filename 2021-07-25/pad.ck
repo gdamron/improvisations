@@ -10,12 +10,6 @@
 2 => int LFO_SETTING;
 0.1 => float LFO_HZ;
 
-0.001 => float REVERB_DRY;
-3000 => int REVERB_SIZE;
-10::second => dur REVERB_DECAY;
-0.5 => float REVERB_EARLY;
-1.0 => float REVERB_TAIL;
-
 14000 => float FILTER_FREQ;
 1.0 => float FILTER_Q;
 16 => int DELAY_FACTOR;
@@ -39,8 +33,7 @@ SinOsc vibrato;
 SinOsc s;
 SinOsc s2;
 SinOsc s3;
-DelayL d;
-ADSR e => ResonZ f => Pan2 p => JCRev r => Gain g => dac;
+ADSR e => ResonZ f => Gain g => dac;
 0.5 => g.gain;
 
 [-5, 0, 3] @=> int bottoms[];
@@ -57,17 +50,6 @@ t::ms => dur T;
 LFO_SETTING => s.sync => s2.sync => s3.sync;
 LFO_HZ => vibrato.freq;
 
-// pan
-Math.random2f(-1, 1) => p.pan;
-
-// reverb settings
-//REVERB_DRY => r.dry;
-//REVERB_SIZE => r.roomsize;
-//REVERB_DECAY => r.revtime;
-//REVERB_EARLY => r.early;
-//REVERB_TAIL => r.tail;
-1.0 => r.mix;
-
 // filter
 FILTER_FREQ => f.freq;
 FILTER_Q => f.Q;
@@ -76,9 +58,6 @@ FILTER_Q => f.Q;
 vibrato => s => e;
 vibrato => s2 => e;
 vibrato => s3 => e;
-s => d;
-s2 => d;
-s3 => d;
 
 0 => s.gain => s2.gain => s3.gain;
 
@@ -91,11 +70,6 @@ if (t < MIN_PULSE) {
 }
 
 t::ms => T;
-
-// delay
-T / DELAY_FACTOR => d.delay;
-T => d.max;
-DELAY_GAIN => d.gain;
 
 (ADSR_ATTACK_FACTOR::T + ADSR_DECAY_FACTOR::T + ADSR_RELEASE_FACTOR::second) / 1::ms => float measure;
 e.set(ADSR_ATTACK_FACTOR::T, ADSR_DECAY_FACTOR::T, ADSR_SUSTAIN, ADSR_RELEASE_FACTOR::second);
