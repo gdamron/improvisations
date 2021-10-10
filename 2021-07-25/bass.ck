@@ -33,13 +33,15 @@ float freq2;
 BlitSaw s;
 
 // connect patch
-GVerb r => dac;
+// GVerb r => dac;
+JCRev r => dac;
 LPF f => ADSR e => Pan2 p=> Gain g => dac;
 p => r;
 1.0 => g.gain;
 e.set(ADSR_A, ADSR_D, ADSR_S, ADSR_R);
-REVERB_MIX => r.dry;
-REVERB_GAIN => r.gain;
+//REVERB_MIX => r.dry;
+//REVERB_GAIN => r.gain;
+0.2 => r.mix;
 s => f;
 PAN_POSITION => p.pan;
 

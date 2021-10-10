@@ -40,8 +40,8 @@ SinOsc s;
 SinOsc s2;
 SinOsc s3;
 DelayL d;
-ADSR e => ResonZ f => Pan2 p => GVerb r => Gain g => dac;
-1.0 => g.gain;
+ADSR e => ResonZ f => Pan2 p => JCRev r => Gain g => dac;
+0.5 => g.gain;
 
 [-5, 0, 3] @=> int bottoms[];
 [7, 3, 10 ] @=> int mids[];
@@ -61,11 +61,12 @@ LFO_HZ => vibrato.freq;
 Math.random2f(-1, 1) => p.pan;
 
 // reverb settings
-REVERB_DRY => r.dry;
-REVERB_SIZE => r.roomsize;
-REVERB_DECAY => r.revtime;
-REVERB_EARLY => r.early;
-REVERB_TAIL => r.tail;
+//REVERB_DRY => r.dry;
+//REVERB_SIZE => r.roomsize;
+//REVERB_DECAY => r.revtime;
+//REVERB_EARLY => r.early;
+//REVERB_TAIL => r.tail;
+1.0 => r.mix;
 
 // filter
 FILTER_FREQ => f.freq;
