@@ -1,64 +1,59 @@
-[7, 0, 14, 21, 28, 35, 14, 21] @=> int notes[];
-[1.05, 1, 0.95, 0.95, 0.9, 0.95, 1, 1] @=> float durs[];
+[19, 12, 14, 21, 16, 23, 14, 21] @=> int notes[];
+[0, 0, 0, 0, 0, 0, 0, 0] @=> int offsets[];
 
 50 => int base;
 0 => int i;
-0 => int measure;
+0 => int count;
 
-Gain mix => LPF lpf => dac;
-BlitSaw osc => ADSR adsr => Gain g => mix;
-adsr => GVerb r => Gain rgain => mix;
+20::ms => dur onset;
+190::ms => dur beat;
 
-TriOsc lfo1 => blackhole;
-120::second => lfo1.period;
+TriOsc osc => ADSR adsr => Gain g => dac;
+adsr => Delay delay => g;
+delay => delay;
+adsr => GVerb r => g;
 
-TriOsc lfo2 => blackhole;
-90::second => lfo2.period;
+beat * 4 => delay.max;
+beat => delay.delay;
+0.65 => delay.gain;
 
 0.15 => g.gain;
-0.0 => r.dry;
-0.15 => rgain.gain;
+0.2 => r.dry;
 
-adsr.set(6::ms, 10::ms, 0.8, 600::ms);
+(10::ms, 10::ms, 0.9, 600::ms) => adsr.set;
 
-fun void play() {
-  while(true) {
-    Std.mtof(notes[i] + base) => osc.freq;
-    adsr.keyOn();
-    30::ms => now;
+while(true) {
+  Std.mtof(notes[i] + base + offsets[i]) => osc.freq;
+  1 => adsr.keyOn;
+  onset => now;
 
-    adsr.keyOff();
-    (200 * durs[i])::ms => now;
+  1 => adsr.keyOff;
+  beat => now;
+
+  count + 1 => count;
+
+  if (count > 31) {
+    -12 => offsets[0];
+    -12 => offsets[1];
+    12 => offsets[4];
+    12 => offsets[5];
     
-    (i + 1) % notes.cap() => i;
-
-    if (i == 0) {
-      1 + measure => measure;
-    }
-
-    if (measure % 8 == 0) {
-      7 => notes[0];
-    } else if (measure % 4 == 0) {
-      9 => notes[0];
+    if (Math.random2f(0, 1) > 0.95) {
+      19 => offsets[5];
+    } else {
+      12 => offsets[5];
     }
   }
-}
 
-fun void modulate() { 
-  while (true) {
-    (lfo1.last() + 1.0) / 2.0 * 15000 + 250 => float lfo1Value;
-    lfo1Value => lpf.freq;
-    
-    (lfo2.last() + 1.0) / 2.0 * 10.0 => float lfo2Val;
-    lfo2Val => lpf.Q;
 
-    10::ms => now;
+  if (count > 127) {
+    0 => count;
+    0 => offsets[0];
+    0 => offsets[1];
+    0 => offsets[4];
+    0 => offsets[5];
   }
+  
+  (i + 1) % notes.cap() => i;
 }
 
-spork ~ play();
-spork ~ modulate();
-
-while (true) {
-  1::second => now;
-}
