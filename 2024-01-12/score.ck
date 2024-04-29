@@ -1,4 +1,4 @@
-45 => int base;
+38 => int base;
 7 => int interval;
 4 => int count;
 
@@ -23,7 +23,7 @@ for (0 => int i; i < pads.size() - 1; i++) {
   spork ~ pad.play();
 }
 
-drone.setup(base - 12 - 7);
+drone.setup(base);
 spork ~ drone.play();
 
 while (true) {
